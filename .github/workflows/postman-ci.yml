@@ -16,7 +16,7 @@ jobs:
 
       - name: Run Postman Collection
         run: |
-          newman run collection.json \
+          newman run 课程资源共享平台接口测试用例集.postman_collection.json \
             --reporters cli,junit,html \
             --reporter-junit-export report.xml \
             --reporter-html-export report.html
