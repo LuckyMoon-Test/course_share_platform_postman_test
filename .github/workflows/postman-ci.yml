@@ -1,0 +1,31 @@
+name: Run Postman Collection
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  newman-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Newman
+        run: npm install -g newman
+
+      - name: Run Postman Collection
+        run: |
+          newman run collection.json \
+            --reporters cli,junit,html \
+            --reporter-junit-export report.xml \
+            --reporter-html-export report.html
+
+      - name: Upload Test Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: postman-reports
+          path: |
+            report.xml
+            report.html
