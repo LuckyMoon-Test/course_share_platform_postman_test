@@ -1,0 +1,465 @@
+{
+  "info": {
+    "_postman_id": "50f63cd1-c532-45b7-9f1a-98eb511c28db",
+    "name": "课程资源共享平台接口测试用例集",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "56061163",
+    "_collection_link": "https://go.postman.co/collection/56061163-50f63cd1-c532-45b7-9f1a-98eb511c28db?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "管理员身份登录",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "//获取管理员登录token\r\nvar jasonData = pm.response.json();\r\nvar token = jasonData.data.token;\r\npm.environment.set(\"admin_token\",\"Bearer\"+\" \"+token);"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "",
+            "value": "",
+            "disabled": true
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n\"username\":\"admin\",\r\n\"password\":\"admin123\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/user/login",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "user",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "教师登录",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "//获取教师登录token\r\nvar jasonData = pm.response.json();\r\nvar token = jasonData.data.token;\r\npm.environment.set(\"teacher_token\",\"Bearer\"+\" \"+token);"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n\"username\":\"测试教师\",\r\n\"password\":\"123456\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/user/login",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "user",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "教师上传资源",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "",
+            "value": "",
+            "disabled": true
+          },
+          {
+            "key": "Authorization",
+            "value": "{{teacher_token}}"
+          }
+        ],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "chunk",
+              "type": "file",
+              "src": [
+                "/D:/桌面/参数化文件/参数化用例集.postman_collection.json"
+              ]
+            },
+            {
+              "key": "fileHash",
+              "value": "d87e1943a1c5c21fb0b8493eac2ed0e6",
+              "type": "text"
+            },
+            {
+              "key": "chunkIndex",
+              "value": "0",
+              "type": "text"
+            },
+            {
+              "key": "totalChunks",
+              "value": "1",
+              "type": "text"
+            },
+            {
+              "key": "chunkSize",
+              "value": "5242880",
+              "type": "text"
+            },
+            {
+              "key": "currentChunkSize",
+              "value": "1371",
+              "type": "text"
+            },
+            {
+              "key": "totalSize",
+              "value": "1371",
+              "type": "text"
+            },
+            {
+              "key": "fileName",
+              "value": "参数化用例集.postman_collection.json",
+              "type": "text"
+            },
+            {
+              "key": "fileType",
+              "value": "application/json",
+              "type": "text"
+            },
+            {
+              "key": "title",
+              "value": "最新测试",
+              "type": "text"
+            },
+            {
+              "key": "description",
+              "value": "",
+              "type": "text"
+            },
+            {
+              "key": "categoryId",
+              "value": "14",
+              "type": "text"
+            },
+            {
+              "key": "uploaderId",
+              "value": "12",
+              "type": "text"
+            },
+            {
+              "key": "permissionLevel",
+              "value": "private",
+              "type": "text"
+            },
+            {
+              "key": "tags",
+              "value": "软件测试",
+              "type": "text"
+            }
+          ]
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/chunk/upload",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "chunk",
+            "upload"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "审核通过",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "{{admin_token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"status\":\"approved\",\"reason\":\"\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/admin/resources/49/audit",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "admin",
+            "resources",
+            "49",
+            "audit"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "有权限学生查看资源",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "{{admin_token}}"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:8080/api/resource/49",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "resource",
+            "49"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "无权限学生登录",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "//获取无权限学生登录token\r\nvar jasonData = pm.response.json();\r\nvar token = jasonData.data.token;\r\npm.environment.set(\"non_token\",\"Bearer\"+\" \"+token);"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n\"username\":\"接口测试\",\r\n\"password\":\"123456\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/user/login",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "user",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "无权限学生访问私有资源",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "{{non_token}}"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:8080/api/resource/49",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "resource",
+            "49"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "提交权限申请",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "{{non_token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"requestType\":\"resource_access\",\"resourceId\":49,\"reason\":\"我申请查看权限\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/permission/request",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "permission",
+            "request"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "管理员审核通过",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "{{admin_token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"requestId\":5,\"status\":\"approved\",\"reviewComment\":\"审批通过\",\"validDays\":null}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/permission/request/review",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "permission",
+            "request",
+            "review"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "获得权限学生查看资源",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "{{non_token}}"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:8080/api/resource/49",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "resource",
+            "49"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
